@@ -14,9 +14,24 @@ namespace ImageEditor
 {
     public partial class TextEditor : UserControl
     {
+        public string Value { get; set; }
+        public Brush FontColor { get; set; }
+        public float X { get; set; }
+        public float Y { get; set; }
+        public Font FontConfig { get; set; }
+
+        [Browsable(true)]
+        [Category("Action")]
+        public event EventHandler TextEdited;
+
         public TextEditor()
         {
             InitializeComponent();
+            Value = string.Empty;
+            FontColor = new SolidBrush(Color.Black);
+            X = 0f;
+            Y = 0f;
+            FontConfig = new Font("Arial", 10);
             LoadColorCBO();
             LoadFontsData();
         }
@@ -61,32 +76,46 @@ namespace ImageEditor
 
         private void txtAdded_TextChanged(object sender, EventArgs e)
         {
-            
+            Value = txtAdded.Text;
+
+            if (TextEdited != null) TextEdited(this, e);
         }
 
         private void cboColor_SelectedIndexChanged(object sender, EventArgs e)
         {
-            
+            string colorName = cboColor.Items[cboColor.SelectedIndex].ToString();
+            Color color = Color.FromName(colorName);
+            FontColor = new SolidBrush(color);
+
+            if (TextEdited != null) TextEdited(this, e);
         }
 
         private void nudXPos_ValueChanged(object sender, EventArgs e)
         {
-            
+            X = (float)nudXPos.Value;
+
+            if (TextEdited != null) TextEdited(this, e);
         }
 
         private void nudYPos_ValueChanged(object sender, EventArgs e)
         {
-            
+            Y = (float)nudYPos.Value;
+
+            if (TextEdited != null) TextEdited(this, e);
         }
 
         private void cboFonts_SelectedIndexChanged(object sender, EventArgs e)
         {
-            
+            FontConfig = new Font(cboFonts.SelectedItem.ToString(), (float)nudFontSize.Value);
+
+            if (TextEdited != null) TextEdited(this, e);
         }
 
         private void nudFontSize_ValueChanged(object sender, EventArgs e)
         {
-            
+            FontConfig = new Font(cboFonts.SelectedItem.ToString(), (float)nudFontSize.Value);
+
+            if (TextEdited != null) TextEdited(this, e);
         }
     }
 }

@@ -22,29 +22,32 @@ namespace ImageEditor
             InitializeComponent();
             openImageDialog.Filter = "image files (*.jpg; *.jpeg; *.jpe; *.gif; *.png)| *.jpg; *.jpeg; *.jpe; *.gif; *.png";
             LoadColorCBO();
-            LoadFontsData();
+            LoadFontsData(); 
+            flowLayoutPanel1.AutoScroll = true;
+            flowLayoutPanel1.FlowDirection = FlowDirection.TopDown;
+            flowLayoutPanel1.WrapContents = false; // Vertical rather than horizontal scrolling
         }
 
         private void LoadFontsData()
         {
-            foreach (FontFamily font in System.Drawing.FontFamily.Families)
-            {
-                cboFonts.Items.Add(font.Name);
-            }
-            cboFonts.SelectedIndex = 2;
+            //foreach (FontFamily font in System.Drawing.FontFamily.Families)
+            //{
+            //    cboFonts.Items.Add(font.Name);
+            //}
+            //cboFonts.SelectedIndex = 2;
         }
 
         private void LoadColorCBO()
         {
-            ArrayList colorList = new ArrayList();
-            Type colorType = typeof(Color);
-            PropertyInfo[] propInfoList = colorType.GetProperties(BindingFlags.Static |
-                                          BindingFlags.DeclaredOnly | BindingFlags.Public);
-            foreach (PropertyInfo c in propInfoList)
-            {
-                this.cboColor.Items.Add(c.Name);
-            }
-            cboColor.SelectedIndex = 8;
+            //ArrayList colorList = new ArrayList();
+            //Type colorType = typeof(Color);
+            //PropertyInfo[] propInfoList = colorType.GetProperties(BindingFlags.Static |
+            //                              BindingFlags.DeclaredOnly | BindingFlags.Public);
+            //foreach (PropertyInfo c in propInfoList)
+            //{
+            //    this.cboColor.Items.Add(c.Name);
+            //}
+            //cboColor.SelectedIndex = 8;
         }
 
         private void btnSelectImage_Click(object sender, EventArgs e)
@@ -56,14 +59,14 @@ namespace ImageEditor
                     txtImagePath.Text = openImageDialog.FileName;
                     mainImage = CreateMainImage();
 
-                    using (Font arialFont = new Font("Arial", 10))
-                    {
-                        PointF firstLocation = new PointF(10f, 10f);
-                        string colorName = cboColor.Items[cboColor.SelectedIndex].ToString();
-                        Color color = Color.FromName(colorName);
-                        Brush brush = new SolidBrush(color);
-                        graphicsObject.DrawString(txtAdded.Text, arialFont, brush, firstLocation);
-                    }
+                    //using (Font arialFont = new Font("Arial", 10))
+                    //{
+                    //    PointF firstLocation = new PointF(10f, 10f);
+                    //    string colorName = cboColor.Items[cboColor.SelectedIndex].ToString();
+                    //    Color color = Color.FromName(colorName);
+                    //    Brush brush = new SolidBrush(color);
+                    //    graphicsObject.DrawString(txtAdded.Text, arialFont, brush, firstLocation);
+                    //}
 
                     pbMain.Image = mainImage;
 
@@ -118,94 +121,132 @@ namespace ImageEditor
             }
         }
 
-        private void txtAdded_TextChanged(object sender, EventArgs e)
+        private void cboFonts_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if(graphicsObject != null)
-            {
-                mainImage = CreateMainImage();
-                Font arialFont = new Font(cboFonts.SelectedItem.ToString(), (float)nudFontSize.Value);
-                PointF firstLocation = new PointF(10f, 10f);
-                string colorName = cboColor.Items[cboColor.SelectedIndex].ToString();
-                Color color = Color.FromName(colorName);
-                Brush brush = new SolidBrush(color);
-                graphicsObject.DrawString(txtAdded.Text, arialFont, brush, firstLocation);
-                pbMain.Image = mainImage;
-            }
-        }
 
-        private void cboColor_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if(graphicsObject != null)
-            {
-                mainImage = CreateMainImage();
-                Font arialFont = new Font(cboFonts.SelectedItem.ToString(), (float)nudFontSize.Value);
-                PointF firstLocation = new PointF(10f, 10f);
-                string colorName = cboColor.Items[cboColor.SelectedIndex].ToString();
-                Color color = Color.FromName(colorName);
-                Brush brush = new SolidBrush(color);
-                graphicsObject.DrawString(txtAdded.Text, arialFont, brush, firstLocation);
-                pbMain.Image = mainImage;
-            }
-        }
-
-        private void nudXPos_ValueChanged(object sender, EventArgs e)
-        {
-            if (graphicsObject != null)
-            {
-                mainImage = CreateMainImage();
-                Font arialFont = new Font(cboFonts.SelectedItem.ToString(), (float)nudFontSize.Value);
-                PointF firstLocation = new PointF((float)nudXPos.Value, (float)nudYPos.Value);
-                string colorName = cboColor.Items[cboColor.SelectedIndex].ToString();
-                Color color = Color.FromName(colorName);
-                Brush brush = new SolidBrush(color);
-                graphicsObject.DrawString(txtAdded.Text, arialFont, brush, firstLocation);
-                pbMain.Image = mainImage;
-            }
         }
 
         private void nudYPos_ValueChanged(object sender, EventArgs e)
         {
-            if (graphicsObject != null)
-            {
-                mainImage = CreateMainImage();
-                Font arialFont = new Font(cboFonts.SelectedItem.ToString(), (float)nudFontSize.Value);
-                PointF firstLocation = new PointF((float)nudXPos.Value, (float)nudYPos.Value);
-                string colorName = cboColor.Items[cboColor.SelectedIndex].ToString();
-                Color color = Color.FromName(colorName);
-                Brush brush = new SolidBrush(color);
-                graphicsObject.DrawString(txtAdded.Text, arialFont, brush, firstLocation);
-                pbMain.Image = mainImage;
-            }
+
         }
 
-        private void cboFonts_SelectedIndexChanged(object sender, EventArgs e)
+        private void txtAdded_TextChanged(object sender, EventArgs e)
         {
-            if (graphicsObject != null)
-            {
-                mainImage = CreateMainImage();
-                Font arialFont = new Font(cboFonts.SelectedItem.ToString(), (float)nudFontSize.Value);
-                PointF firstLocation = new PointF((float)nudXPos.Value, (float)nudYPos.Value);
-                string colorName = cboColor.Items[cboColor.SelectedIndex].ToString();
-                Color color = Color.FromName(colorName);
-                Brush brush = new SolidBrush(color);
-                graphicsObject.DrawString(txtAdded.Text, arialFont, brush, firstLocation);
-                pbMain.Image = mainImage;
-            }
+
+        }
+
+        private void nudXPos_ValueChanged(object sender, EventArgs e)
+        {
+
         }
 
         private void nudFontSize_ValueChanged(object sender, EventArgs e)
         {
-            if (graphicsObject != null)
-            {
-                mainImage = CreateMainImage();
-                Font arialFont = new Font(cboFonts.SelectedItem.ToString(), (float)nudFontSize.Value);
-                PointF firstLocation = new PointF((float)nudXPos.Value, (float)nudYPos.Value);
-                string colorName = cboColor.Items[cboColor.SelectedIndex].ToString();
-                Color color = Color.FromName(colorName);
-                Brush brush = new SolidBrush(color);
-                graphicsObject.DrawString(txtAdded.Text, arialFont, brush, firstLocation);
-                pbMain.Image = mainImage;
-            }
+
         }
+
+        private void cboColor_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnAddText_Click(object sender, EventArgs e)
+        {
+            TextEditor MyButton = new TextEditor();
+            MyButton.Text = "Submit";
+            flowLayoutPanel1.Controls.Add(MyButton);
+            flowLayoutPanel1.Controls.Add(MyButton);
+        }
+
+        //private void txtAdded_TextChanged(object sender, EventArgs e)
+        //{
+        //    if(graphicsObject != null)
+        //    {
+        //        mainImage = CreateMainImage();
+        //        Font arialFont = new Font(cboFonts.SelectedItem.ToString(), (float)nudFontSize.Value);
+        //        PointF firstLocation = new PointF(10f, 10f);
+        //        string colorName = cboColor.Items[cboColor.SelectedIndex].ToString();
+        //        Color color = Color.FromName(colorName);
+        //        Brush brush = new SolidBrush(color);
+        //        graphicsObject.DrawString(txtAdded.Text, arialFont, brush, firstLocation);
+        //        pbMain.Image = mainImage;
+        //    }
+        //}
+
+        //private void cboColor_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    if(graphicsObject != null)
+        //    {
+        //        mainImage = CreateMainImage();
+        //        Font arialFont = new Font(cboFonts.SelectedItem.ToString(), (float)nudFontSize.Value);
+        //        PointF firstLocation = new PointF(10f, 10f);
+        //        string colorName = cboColor.Items[cboColor.SelectedIndex].ToString();
+        //        Color color = Color.FromName(colorName);
+        //        Brush brush = new SolidBrush(color);
+        //        graphicsObject.DrawString(txtAdded.Text, arialFont, brush, firstLocation);
+        //        pbMain.Image = mainImage;
+        //    }
+        //}
+
+        //private void nudXPos_ValueChanged(object sender, EventArgs e)
+        //{
+        //    if (graphicsObject != null)
+        //    {
+        //        mainImage = CreateMainImage();
+        //        Font arialFont = new Font(cboFonts.SelectedItem.ToString(), (float)nudFontSize.Value);
+        //        PointF firstLocation = new PointF((float)nudXPos.Value, (float)nudYPos.Value);
+        //        string colorName = cboColor.Items[cboColor.SelectedIndex].ToString();
+        //        Color color = Color.FromName(colorName);
+        //        Brush brush = new SolidBrush(color);
+        //        graphicsObject.DrawString(txtAdded.Text, arialFont, brush, firstLocation);
+        //        pbMain.Image = mainImage;
+        //    }
+        //}
+
+        //private void nudYPos_ValueChanged(object sender, EventArgs e)
+        //{
+        //    if (graphicsObject != null)
+        //    {
+        //        mainImage = CreateMainImage();
+        //        Font arialFont = new Font(cboFonts.SelectedItem.ToString(), (float)nudFontSize.Value);
+        //        PointF firstLocation = new PointF((float)nudXPos.Value, (float)nudYPos.Value);
+        //        string colorName = cboColor.Items[cboColor.SelectedIndex].ToString();
+        //        Color color = Color.FromName(colorName);
+        //        Brush brush = new SolidBrush(color);
+        //        graphicsObject.DrawString(txtAdded.Text, arialFont, brush, firstLocation);
+        //        pbMain.Image = mainImage;
+        //    }
+        //}
+
+        //private void cboFonts_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    if (graphicsObject != null)
+        //    {
+        //        mainImage = CreateMainImage();
+        //        Font arialFont = new Font(cboFonts.SelectedItem.ToString(), (float)nudFontSize.Value);
+        //        PointF firstLocation = new PointF((float)nudXPos.Value, (float)nudYPos.Value);
+        //        string colorName = cboColor.Items[cboColor.SelectedIndex].ToString();
+        //        Color color = Color.FromName(colorName);
+        //        Brush brush = new SolidBrush(color);
+        //        graphicsObject.DrawString(txtAdded.Text, arialFont, brush, firstLocation);
+        //        pbMain.Image = mainImage;
+        //    }
+        //}
+
+        //private void nudFontSize_ValueChanged(object sender, EventArgs e)
+        //{
+        //    if (graphicsObject != null)
+        //    {
+        //        mainImage = CreateMainImage();
+        //        Font arialFont = new Font(cboFonts.SelectedItem.ToString(), (float)nudFontSize.Value);
+        //        PointF firstLocation = new PointF((float)nudXPos.Value, (float)nudYPos.Value);
+        //        string colorName = cboColor.Items[cboColor.SelectedIndex].ToString();
+        //        Color color = Color.FromName(colorName);
+        //        Brush brush = new SolidBrush(color);
+        //        graphicsObject.DrawString(txtAdded.Text, arialFont, brush, firstLocation);
+        //        pbMain.Image = mainImage;
+        //    }
+        //}
     }
 }
